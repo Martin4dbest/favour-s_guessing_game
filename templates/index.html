@@ -1,331 +1,313 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Number Guessing Game</title>
+    <title>FavourGuess — Number Guessing Game</title>
+
+    <meta
+        name="description"
+        content="FavourGuess is a fun and challenging number guessing game."
+    >
 
     <link
         rel="stylesheet"
         href="{{ url_for('static', filename='style.css') }}"
     >
-
 </head>
-
 
 <body>
 
-    <div class="background-glow glow-one"></div>
-    <div class="background-glow glow-two"></div>
+    <main class="page-wrapper">
 
+        <div class="game-card">
 
-    <main class="page">
+            <!-- Logo -->
+            <div class="game-logo">
+                <span>🎯</span>
+            </div>
 
+            <!-- Brand -->
+            <div class="brand-name">
+                Favour<span>Guess</span>
+            </div>
 
-        <section class="game-card">
+            <!-- NAME SCREEN -->
+            {% if not game_started %}
 
+                <div class="welcome-section">
 
-            <!-- HEADER -->
-
-            <header class="game-header">
-
-                <div class="logo">
-                    <span>🎯</span>
-                </div>
-
-                <div class="badge">
-                    Favour Ekezie PYTHON GAME 1
-                </div>
-
-                <h1>
-                    Number Guessing
-                </h1>
-
-                <p>
-                    Test your intuition and find the
-                    secret number.
-                </p>
-
-            </header>
-
-
-
-            <!-- GAME RANGE -->
-
-            <section class="range-section">
-
-                <div class="range-top">
-
-                    <span>
-                        SECRET NUMBER
-                    </span>
-
-                    <span>
-                        1 — 100
-                    </span>
-
-                </div>
-
-
-                <div class="number-display">
-
-                    <span class="question-mark">
-                        ?
-                    </span>
-
-                </div>
-
-
-                <p class="range-description">
-                    I'm thinking of a number between
-                    <strong>1</strong> and <strong>100</strong>.
-                </p>
-
-            </section>
-
-
-
-            <!-- STATISTICS -->
-
-            <section class="stats">
-
-                <div class="stat-card">
-
-                    <div class="stat-icon">
-                        🔢
+                    <div class="game-badge">
+                        🎮 NUMBER CHALLENGE
                     </div>
 
-                    <div>
+                    <h1>
+                        Welcome to<br>
+                        <span>FavourGuess</span>
+                    </h1>
 
-                        <span>
-                            ATTEMPTS
-                        </span>
+                    <p class="subtitle">
+                        Test your intuition and see how quickly
+                        you can find the hidden number.
+                    </p>
 
-                        <strong>
-                            {{ attempts }}
-                        </strong>
+                    <form method="POST" class="name-form">
 
-                    </div>
+                        <label for="player_name">
+                            What's your name?
+                        </label>
 
-                </div>
+                        <div class="input-wrapper">
+                            <span class="input-icon">👤</span>
 
+                            <input
+                                type="text"
+                                id="player_name"
+                                name="player_name"
+                                placeholder="Enter your name"
+                                maxlength="30"
+                                autocomplete="name"
+                                autofocus
+                                required
+                            >
+                        </div>
 
-                <div class="stat-card">
-
-                    <div class="stat-icon">
-                        🎯
-                    </div>
-
-                    <div>
-
-                        <span>
-                            RANGE
-                        </span>
-
-                        <strong>
-                            1–100
-                        </strong>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-
-            <!-- MESSAGE -->
-
-            {% if message %}
-
-                <div class="message {{ message_type }}">
-
-                    {% if message_type == "success" %}
-
-                        <span class="message-icon">
-                            🎉
-                        </span>
-
-                    {% elif message_type == "low" %}
-
-                        <span class="message-icon">
-                            ↓
-                        </span>
-
-                    {% elif message_type == "high" %}
-
-                        <span class="message-icon">
-                            ↑
-                        </span>
-
-                    {% else %}
-
-                        <span class="message-icon">
-                            !
-                        </span>
-
-                    {% endif %}
-
-
-                    <div>
-
-                        <strong>
-
-                            {% if message_type == "success" %}
-                                Correct!
-                            {% elif message_type == "low" %}
-                                Too Low
-                            {% elif message_type == "high" %}
-                                Too High
-                            {% else %}
-                                Attention
-                            {% endif %}
-
-                        </strong>
-
-                        <p>
-                            {{ message }}
-                        </p>
-
-                    </div>
-
-                </div>
-
-            {% endif %}
-
-
-
-            <!-- GUESS FORM -->
-
-            {% if not game_over %}
-
-                <form
-                    method="POST"
-                    class="guess-form"
-                >
-
-                    <label for="guess">
-                        Enter your guess
-                    </label>
-
-
-                    <div class="input-container">
-
-                        <input
-                            type="number"
-                            id="guess"
-                            name="guess"
-                            min="1"
-                            max="100"
-                            placeholder="50"
-                            autocomplete="off"
-                            autofocus
-                            required
-                        >
-
+                        {% if name_error %}
+                            <p class="error-text">
+                                {{ name_error }}
+                            </p>
+                        {% endif %}
 
                         <button
                             type="submit"
-                            class="guess-button"
+                            class="primary-button"
                         >
-
-                            <span>
-                                Make Guess
-                            </span>
-
-                            <span class="arrow">
-                                →
-                            </span>
-
+                            <span>Start Game</span>
+                            <span class="button-arrow">→</span>
                         </button>
 
+                    </form>
+
+                    <div class="game-info">
+
+                        <div class="info-item">
+                            <span class="info-icon">🔢</span>
+                            <div>
+                                <strong>1–100</strong>
+                                <small>Number Range</small>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <span class="info-icon">🧠</span>
+                            <div>
+                                <strong>Unlimited</strong>
+                                <small>Attempts</small>
+                            </div>
+                        </div>
+
                     </div>
-
-
-                    <p class="input-help">
-                        Enter a whole number between 1 and 100
-                    </p>
-
-                </form>
-
-
-            {% else %}
-
-
-                <!-- WIN STATE -->
-
-                <div class="win-panel">
-
-                    <div class="win-icon">
-                        🏆
-                    </div>
-
-                    <h2>
-                        You Cracked It!
-                    </h2>
-
-                    <p>
-                        Excellent work. You found the
-                        secret number.
-                    </p>
 
                 </div>
 
+            {% else %}
 
-                <form method="POST">
+                <!-- GAME SCREEN -->
 
-                    <button
-                        type="submit"
-                        name="action"
-                        value="new_game"
-                        class="new-game-button"
-                    >
+                <div class="game-section">
 
-                        <span>
-                            ↻
-                        </span>
+                    <div class="player-welcome">
+                        <span>Welcome,</span>
+                        <strong>{{ player_name }}!</strong>
+                        <span class="wave">👋</span>
+                    </div>
 
-                        Play Again
+                    <div class="game-badge">
+                        🎯 GUESS THE NUMBER
+                    </div>
 
-                    </button>
+                    <h1>
+                        I'm thinking of a<br>
+                        <span>secret number</span>
+                    </h1>
 
-                </form>
+                    <p class="subtitle">
+                        Pick a number between <strong>1 and 100</strong>
+                        and see if you can find it.
+                    </p>
+
+                    <!-- Stats -->
+                    <div class="stats">
+
+                        <div class="stat-card">
+                            <span class="stat-icon">🎯</span>
+                            <div>
+                                <span class="stat-label">
+                                    RANGE
+                                </span>
+                                <strong>
+                                    1 – 100
+                                </strong>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <span class="stat-icon">🔢</span>
+                            <div>
+                                <span class="stat-label">
+                                    ATTEMPTS
+                                </span>
+                                <strong>
+                                    {{ attempts }}
+                                </strong>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Feedback -->
+                    {% if message %}
+
+                        <div class="message {{ message_type }}">
+
+                            {% if message_type == "success" %}
+                                <span class="message-icon">🎉</span>
+
+                                <div>
+                                    <strong>
+                                        Congratulations, {{ player_name }}!
+                                    </strong>
+
+                                    <p>
+                                        You guessed the number
+                                        <strong>{{ number }}</strong>
+                                        in
+                                        <strong>{{ attempts }}</strong>
+                                        {% if attempts == 1 %}
+                                            attempt
+                                        {% else %}
+                                            attempts
+                                        {% endif %}.
+                                    </p>
+                                </div>
+
+                            {% elif message_type == "low" %}
+
+                                <span class="message-icon">⬆️</span>
+
+                                <div>
+                                    <strong>Too Low!</strong>
+                                    <p>Try a higher number.</p>
+                                </div>
+
+                            {% elif message_type == "high" %}
+
+                                <span class="message-icon">⬇️</span>
+
+                                <div>
+                                    <strong>Too High!</strong>
+                                    <p>Try a lower number.</p>
+                                </div>
+
+                            {% else %}
+
+                                <span class="message-icon">⚠️</span>
+
+                                <div>
+                                    <strong>Oops!</strong>
+                                    <p>{{ message }}</p>
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    {% endif %}
+
+                    <!-- Guess Form -->
+                    {% if not game_won %}
+
+                        <form
+                            method="POST"
+                            class="guess-form"
+                        >
+
+                            <label for="guess">
+                                Enter your guess
+                            </label>
+
+                            <div class="guess-input-group">
+
+                                <input
+                                    type="number"
+                                    id="guess"
+                                    name="guess"
+                                    min="1"
+                                    max="100"
+                                    placeholder="?"
+                                    autocomplete="off"
+                                    autofocus
+                                    required
+                                >
+
+                                <button
+                                    type="submit"
+                                    class="guess-button"
+                                >
+                                    Guess
+                                </button>
+
+                            </div>
+
+                            <p class="hint">
+                                💡 Choose a number from 1 to 100
+                            </p>
+
+                        </form>
+
+                    {% else %}
+
+                        <div class="success-actions">
+
+                            <a
+                                href="{{ url_for('new_game') }}"
+                                class="primary-button"
+                            >
+                                <span>Play Again</span>
+                                <span class="button-arrow">↻</span>
+                            </a>
+
+                        </div>
+
+                    {% endif %}
+
+                    <!-- Player Actions -->
+                    <div class="player-actions">
+
+                        <a href="{{ url_for('change_player') }}">
+                            Not {{ player_name }}? Change player
+                        </a>
+
+                    </div>
+
+                </div>
 
             {% endif %}
 
-
-
-            <!-- FOOTER -->
-
-            <footer>
-
-                <span>
-                    Built with Python
-                </span>
-
-                <span class="dot">
-                    •
-                </span>
-
-                <span>
-                    Keep guessing
-                </span>
-
+            <!-- Footer -->
+            <footer class="game-footer">
+                <span>Made with</span>
+                <span class="heart">♥</span>
+                <span>by Favour</span>
             </footer>
 
-
-        </section>
+        </div>
 
     </main>
 
-
 </body>
-
 </html>
