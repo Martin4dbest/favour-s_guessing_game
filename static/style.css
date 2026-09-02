@@ -1,24 +1,27 @@
 :root {
-    --primary: #5b5cf0;
-    --primary-dark: #4848d8;
-    --purple: #8b5cf6;
-    --text: #172033;
-    --muted: #718096;
-    --border: #e8eaf3;
-    --light: #f7f8fc;
-    --white: #ffffff;
+    --bg: #070b1a;
+    --bg-2: #0d1230;
+    --card: #111936;
+    --card-2: #151f42;
 
-    --green: #16a34a;
-    --green-bg: #ecfdf3;
+    --primary: #6366f1;
+    --primary-light: #818cf8;
+    --purple: #a855f7;
+    --cyan: #22d3ee;
 
-    --orange: #d97706;
-    --orange-bg: #fff8e8;
+    --text: #f8fafc;
+    --muted: #9aa5c1;
 
-    --red: #dc2626;
-    --red-bg: #fff1f2;
+    --border: rgba(129, 140, 248, 0.18);
 
-    --shadow:
-        0 25px 70px rgba(35, 38, 100, 0.12);
+    --green: #22c55e;
+    --green-bg: rgba(34, 197, 94, 0.10);
+
+    --orange: #f59e0b;
+    --orange-bg: rgba(245, 158, 11, 0.10);
+
+    --red: #ef4444;
+    --red-bg: rgba(239, 68, 68, 0.10);
 }
 
 /* =========================
@@ -53,23 +56,64 @@ body {
 
     background:
         radial-gradient(
-            circle at 10% 5%,
-            rgba(91, 92, 240, 0.14),
-            transparent 28%
+            circle at 15% 10%,
+            rgba(99, 102, 241, 0.22),
+            transparent 30%
         ),
         radial-gradient(
-            circle at 90% 90%,
-            rgba(139, 92, 246, 0.12),
-            transparent 28%
+            circle at 85% 90%,
+            rgba(168, 85, 247, 0.18),
+            transparent 30%
         ),
         linear-gradient(
-            135deg,
-            #f9faff 0%,
-            #f3f5ff 50%,
-            #faf8ff 100%
+            145deg,
+            var(--bg),
+            var(--bg-2)
         );
 
     overflow-x: hidden;
+}
+
+/* Decorative game atmosphere */
+
+body::before {
+    content: "";
+
+    position: fixed;
+
+    width: 260px;
+    height: 260px;
+
+    top: -130px;
+    right: -100px;
+
+    border-radius: 50%;
+
+    background: rgba(99, 102, 241, 0.12);
+
+    filter: blur(50px);
+
+    pointer-events: none;
+}
+
+body::after {
+    content: "";
+
+    position: fixed;
+
+    width: 220px;
+    height: 220px;
+
+    bottom: -110px;
+    left: -80px;
+
+    border-radius: 50%;
+
+    background: rgba(168, 85, 247, 0.12);
+
+    filter: blur(50px);
+
+    pointer-events: none;
 }
 
 a {
@@ -82,7 +126,7 @@ input {
 }
 
 /* =========================
-   MAIN PAGE
+   PAGE
 ========================= */
 
 .page-wrapper {
@@ -90,32 +134,48 @@ input {
     min-height: 100vh;
 
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
-    padding: 32px 18px;
+    padding: 28px 16px;
+
+    position: relative;
+    z-index: 1;
 }
+
+/* =========================
+   MAIN GAME CARD
+========================= */
 
 .game-card {
     width: 100%;
     max-width: 570px;
 
-    background: rgba(255, 255, 255, 0.96);
+    padding: 34px 36px 24px;
 
-    border: 1px solid rgba(226, 229, 240, 0.9);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(21, 31, 66, 0.97),
+            rgba(12, 18, 42, 0.98)
+        );
 
-    border-radius: 26px;
+    border: 1px solid var(--border);
 
-    padding: 34px 36px 25px;
+    border-radius: 25px;
 
-    box-shadow: var(--shadow);
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.035);
 
     position: relative;
 
     overflow: hidden;
 
-    animation: pageEnter 0.5s ease;
+    animation: gameEnter 0.5s ease;
 }
+
+/* glowing top edge */
 
 .game-card::before {
     content: "";
@@ -123,16 +183,21 @@ input {
     position: absolute;
 
     top: 0;
-    left: 0;
-    right: 0;
+    left: 12%;
+    right: 12%;
 
-    height: 4px;
+    height: 2px;
 
     background: linear-gradient(
         90deg,
+        transparent,
         var(--primary),
-        var(--purple)
+        var(--purple),
+        transparent
     );
+
+    box-shadow:
+        0 0 18px rgba(99, 102, 241, 0.7);
 }
 
 /* =========================
@@ -140,8 +205,8 @@ input {
 ========================= */
 
 .game-logo {
-    width: 58px;
-    height: 58px;
+    width: 60px;
+    height: 60px;
 
     margin: 0 auto 10px;
 
@@ -149,20 +214,27 @@ input {
     align-items: center;
     justify-content: center;
 
-    border-radius: 17px;
+    border-radius: 18px;
 
-    background: linear-gradient(
-        135deg,
-        var(--primary),
-        var(--purple)
-    );
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #9333ea
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
 
     box-shadow:
-        0 12px 28px rgba(91, 92, 240, 0.24);
+        0 0 0 5px rgba(99, 102, 241, 0.07),
+        0 12px 30px rgba(79, 70, 229, 0.35);
 }
 
 .game-logo span {
-    font-size: 29px;
+    font-size: 30px;
+
+    filter:
+        drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
 }
 
 /* =========================
@@ -172,18 +244,21 @@ input {
 .brand-name {
     text-align: center;
 
-    color: #20243a;
+    color: #ffffff;
 
     font-size: 21px;
     font-weight: 800;
 
     letter-spacing: -0.5px;
 
-    margin-bottom: 25px;
+    margin-bottom: 24px;
+
+    text-shadow:
+        0 0 20px rgba(129, 140, 248, 0.12);
 }
 
 .brand-name span {
-    color: var(--primary);
+    color: var(--primary-light);
 }
 
 /* =========================
@@ -198,22 +273,26 @@ input {
 
     border-radius: 999px;
 
-    background: #f0f1ff;
+    background:
+        rgba(99, 102, 241, 0.10);
 
-    border: 1px solid #e1e3ff;
+    border: 1px solid rgba(129, 140, 248, 0.18);
 
-    color: var(--primary);
+    color: #a5b4fc;
 
     font-size: 10px;
     font-weight: 800;
 
-    letter-spacing: 0.7px;
+    letter-spacing: 0.8px;
 
     margin-bottom: 14px;
+
+    box-shadow:
+        inset 0 0 12px rgba(99, 102, 241, 0.04);
 }
 
 /* =========================
-   WELCOME / GAME
+   HEADINGS
 ========================= */
 
 .welcome-section,
@@ -222,25 +301,28 @@ input {
 }
 
 h1 {
-    color: #171b2e;
+    color: #ffffff;
 
     font-size: clamp(27px, 5vw, 36px);
 
-    line-height: 1.13;
+    line-height: 1.14;
 
-    letter-spacing: -1.1px;
+    letter-spacing: -1px;
 
-    margin-bottom: 13px;
+    margin-bottom: 12px;
 }
 
 h1 span {
-    color: var(--primary);
+    color: var(--primary-light);
+
+    text-shadow:
+        0 0 25px rgba(129, 140, 248, 0.15);
 }
 
 .subtitle {
     max-width: 440px;
 
-    margin: 0 auto 24px;
+    margin: 0 auto 23px;
 
     color: var(--muted);
 
@@ -250,7 +332,7 @@ h1 span {
 }
 
 .subtitle strong {
-    color: #4a5568;
+    color: #c7d2fe;
 }
 
 /* =========================
@@ -267,7 +349,7 @@ h1 span {
 .guess-form > label {
     display: block;
 
-    color: #374151;
+    color: #cbd5e1;
 
     font-size: 11px;
     font-weight: 700;
@@ -277,30 +359,33 @@ h1 span {
 
 .input-wrapper {
     width: 100%;
-
     height: 49px;
 
     display: flex;
     align-items: center;
 
-    border: 1px solid #dfe3ed;
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    border: 1px solid rgba(148, 163, 184, 0.18);
 
     border-radius: 11px;
 
-    background: #fafbfe;
-
     transition:
         border-color 0.2s ease,
-        box-shadow 0.2s ease;
+        box-shadow 0.2s ease,
+        background 0.2s ease;
 }
 
 .input-wrapper:focus-within {
-    border-color: var(--primary);
+    background:
+        rgba(99, 102, 241, 0.06);
+
+    border-color: var(--primary-light);
 
     box-shadow:
-        0 0 0 3px rgba(91, 92, 240, 0.09);
-
-    background: white;
+        0 0 0 3px rgba(99, 102, 241, 0.10),
+        0 0 20px rgba(99, 102, 241, 0.08);
 }
 
 .input-icon {
@@ -310,9 +395,9 @@ h1 span {
     align-items: center;
     justify-content: center;
 
-    font-size: 17px;
-
     flex-shrink: 0;
+
+    font-size: 17px;
 }
 
 .input-wrapper input {
@@ -324,21 +409,21 @@ h1 span {
 
     background: transparent;
 
-    padding: 0 12px 0 0;
+    color: white;
 
-    color: var(--text);
+    padding: 0 12px 0 0;
 
     font-size: 13px;
 }
 
 .input-wrapper input::placeholder {
-    color: #a0a8b8;
+    color: #64748b;
 }
 
 .error-text {
-    color: var(--red);
+    color: #f87171;
 
-    font-size: 11px;
+    font-size: 10px;
 
     margin-top: 6px;
 }
@@ -359,14 +444,15 @@ h1 span {
 
     gap: 9px;
 
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
     border-radius: 11px;
 
     background:
         linear-gradient(
             135deg,
-            var(--primary),
-            var(--purple)
+            #4f46e5,
+            #7c3aed
         );
 
     color: white;
@@ -377,18 +463,21 @@ h1 span {
     cursor: pointer;
 
     box-shadow:
-        0 9px 20px rgba(91, 92, 240, 0.20);
+        0 8px 25px rgba(79, 70, 229, 0.28);
 
     transition:
         transform 0.2s ease,
-        box-shadow 0.2s ease;
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
 }
 
 .primary-button:hover {
     transform: translateY(-2px);
 
+    filter: brightness(1.08);
+
     box-shadow:
-        0 13px 27px rgba(91, 92, 240, 0.25);
+        0 12px 32px rgba(79, 70, 229, 0.38);
 }
 
 .button-arrow {
@@ -429,11 +518,13 @@ h1 span {
 
     text-align: left;
 
-    border: 1px solid var(--border);
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    border:
+        1px solid rgba(148, 163, 184, 0.12);
 
     border-radius: 12px;
-
-    background: var(--light);
 }
 
 .info-icon {
@@ -448,7 +539,8 @@ h1 span {
 
     border-radius: 9px;
 
-    background: white;
+    background:
+        rgba(99, 102, 241, 0.10);
 
     font-size: 16px;
 }
@@ -456,7 +548,7 @@ h1 span {
 .info-item strong {
     display: block;
 
-    color: #252a3d;
+    color: #e2e8f0;
 
     font-size: 12px;
 
@@ -466,7 +558,7 @@ h1 span {
 .info-item small {
     display: block;
 
-    color: #9299aa;
+    color: #64748b;
 
     font-size: 9px;
 }
@@ -478,13 +570,13 @@ h1 span {
 .player-welcome {
     margin-bottom: 14px;
 
-    color: var(--muted);
+    color: #7f8aa5;
 
     font-size: 12px;
 }
 
 .player-welcome strong {
-    color: var(--primary);
+    color: var(--primary-light);
 
     font-size: 14px;
 }
@@ -519,9 +611,11 @@ h1 span {
 
     text-align: left;
 
-    background: var(--light);
+    background:
+        rgba(255, 255, 255, 0.025);
 
-    border: 1px solid var(--border);
+    border:
+        1px solid rgba(148, 163, 184, 0.12);
 
     border-radius: 12px;
 }
@@ -538,7 +632,8 @@ h1 span {
 
     border-radius: 9px;
 
-    background: white;
+    background:
+        rgba(99, 102, 241, 0.10);
 
     font-size: 16px;
 }
@@ -546,24 +641,24 @@ h1 span {
 .stat-label {
     display: block;
 
-    color: #9299aa;
+    color: #66718b;
 
     font-size: 8px;
     font-weight: 800;
 
-    letter-spacing: 0.6px;
+    letter-spacing: 0.7px;
 
     margin-bottom: 2px;
 }
 
 .stat-card strong {
-    color: #252a3d;
+    color: #e2e8f0;
 
     font-size: 13px;
 }
 
 /* =========================
-   MESSAGES
+   FEEDBACK
 ========================= */
 
 .message {
@@ -604,34 +699,32 @@ h1 span {
 }
 
 .message p {
-    margin: 0;
-
     font-size: 11px;
 }
 
 .message.success {
     background: var(--green-bg);
 
-    border-color: #c9f1d7;
+    border-color: rgba(34, 197, 94, 0.20);
 
-    color: var(--green);
+    color: #86efac;
 }
 
 .message.low,
 .message.high {
     background: var(--orange-bg);
 
-    border-color: #f8dfaa;
+    border-color: rgba(245, 158, 11, 0.20);
 
-    color: var(--orange);
+    color: #fcd34d;
 }
 
 .message.error {
     background: var(--red-bg);
 
-    border-color: #ffd1d5;
+    border-color: rgba(239, 68, 68, 0.20);
 
-    color: var(--red);
+    color: #fca5a5;
 }
 
 /* =========================
@@ -661,17 +754,19 @@ h1 span {
 
     padding: 0 14px;
 
-    border: 1px solid #dfe3ed;
+    border:
+        1px solid rgba(148, 163, 184, 0.18);
 
     border-radius: 11px;
 
     outline: none;
 
-    background: #fafbfe;
+    background:
+        rgba(255, 255, 255, 0.035);
 
-    color: var(--text);
+    color: white;
 
-    font-size: 14px;
+    font-size: 15px;
 
     text-align: center;
 
@@ -681,16 +776,15 @@ h1 span {
 }
 
 .guess-input-group input:focus {
-    border-color: var(--primary);
+    border-color: var(--primary-light);
 
     box-shadow:
-        0 0 0 3px rgba(91, 92, 240, 0.09);
-
-    background: white;
+        0 0 0 3px rgba(99, 102, 241, 0.10),
+        0 0 20px rgba(99, 102, 241, 0.08);
 }
 
 .guess-input-group input::placeholder {
-    color: #b4bac7;
+    color: #56617a;
 
     font-size: 19px;
 }
@@ -702,11 +796,16 @@ h1 span {
 
     height: 49px;
 
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.07);
 
     border-radius: 11px;
 
-    background: var(--primary);
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #6366f1
+        );
 
     color: white;
 
@@ -716,23 +815,23 @@ h1 span {
     cursor: pointer;
 
     box-shadow:
-        0 7px 17px rgba(91, 92, 240, 0.16);
+        0 7px 20px rgba(79, 70, 229, 0.22);
 
     transition:
-        background 0.2s ease,
-        transform 0.2s ease;
+        transform 0.2s ease,
+        filter 0.2s ease;
 }
 
 .guess-button:hover {
-    background: var(--primary-dark);
-
     transform: translateY(-1px);
+
+    filter: brightness(1.1);
 }
 
 .hint {
     margin-top: 8px;
 
-    color: #98a0b1;
+    color: #59657f;
 
     font-size: 10px;
 
@@ -740,7 +839,7 @@ h1 span {
 }
 
 /* =========================
-   SUCCESS ACTION
+   SUCCESS
 ========================= */
 
 .success-actions {
@@ -752,7 +851,7 @@ h1 span {
 }
 
 /* =========================
-   PLAYER ACTIONS
+   PLAYER ACTION
 ========================= */
 
 .player-actions {
@@ -762,7 +861,7 @@ h1 span {
 }
 
 .player-actions a {
-    color: #8a93a5;
+    color: #65708a;
 
     font-size: 10px;
 
@@ -770,7 +869,7 @@ h1 span {
 }
 
 .player-actions a:hover {
-    color: var(--primary);
+    color: var(--primary-light);
 }
 
 /* =========================
@@ -787,9 +886,10 @@ h1 span {
     margin-top: 24px;
     padding-top: 17px;
 
-    border-top: 1px solid #eef0f5;
+    border-top:
+        1px solid rgba(148, 163, 184, 0.09);
 
-    color: #a0a7b5;
+    color: #59647d;
 
     font-size: 10px;
 }
@@ -798,42 +898,29 @@ h1 span {
     color: #ef4444;
 
     font-size: 12px;
+
+    text-shadow:
+        0 0 8px rgba(239, 68, 68, 0.4);
 }
 
 /* =========================
    ANIMATION
 ========================= */
 
-@keyframes pageEnter {
+@keyframes gameEnter {
     from {
         opacity: 0;
-        transform: translateY(15px);
+        transform: translateY(18px) scale(0.985);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
 /* =========================
-   TABLET
-========================= */
-
-@media (max-width: 700px) {
-    .page-wrapper {
-        padding: 22px 14px;
-    }
-
-    .game-card {
-        max-width: 550px;
-
-        padding: 29px 25px 22px;
-    }
-}
-
-/* =========================
-   PHONES
+   MOBILE
 ========================= */
 
 @media (max-width: 600px) {
@@ -842,24 +929,22 @@ h1 span {
 
         align-items: flex-start;
 
-        padding: 12px 9px;
+        padding: 12px 8px;
     }
 
     .game-card {
         width: 100%;
 
-        padding: 25px 17px 18px;
+        padding: 24px 15px 18px;
 
         border-radius: 19px;
     }
 
     .game-logo {
-        width: 49px;
-        height: 49px;
+        width: 48px;
+        height: 48px;
 
         border-radius: 14px;
-
-        margin-bottom: 8px;
     }
 
     .game-logo span {
@@ -869,7 +954,7 @@ h1 span {
     .brand-name {
         font-size: 19px;
 
-        margin-bottom: 20px;
+        margin-bottom: 19px;
     }
 
     .game-badge {
@@ -881,7 +966,7 @@ h1 span {
     }
 
     h1 {
-        font-size: 27px;
+        font-size: 26px;
 
         letter-spacing: -0.7px;
 
@@ -913,7 +998,7 @@ h1 span {
     }
 
     .info-item {
-        padding: 10px 8px;
+        padding: 10px 7px;
 
         gap: 7px;
     }
@@ -943,8 +1028,8 @@ h1 span {
         font-size: 13px;
     }
 
-    .game-question {
-        font-size: 17px;
+    .game-section h1 {
+        font-size: 25px;
     }
 
     .stats {
@@ -954,7 +1039,7 @@ h1 span {
     }
 
     .stat-card {
-        padding: 9px 8px;
+        padding: 9px 7px;
 
         gap: 7px;
     }
@@ -1021,29 +1106,29 @@ h1 span {
     }
 
     .game-footer {
-        margin-top: 20px;
-        padding-top: 14px;
+        margin-top: 19px;
+        padding-top: 13px;
     }
 }
 
 /* =========================
-   VERY SMALL PHONES
+   SMALL PHONES
 ========================= */
 
 @media (max-width: 380px) {
     .page-wrapper {
-        padding: 8px 7px;
+        padding: 8px 6px;
     }
 
     .game-card {
-        padding: 21px 13px 16px;
+        padding: 21px 12px 15px;
 
         border-radius: 17px;
     }
 
     .game-logo {
-        width: 45px;
-        height: 45px;
+        width: 44px;
+        height: 44px;
     }
 
     .game-logo span {
@@ -1053,13 +1138,12 @@ h1 span {
     .brand-name {
         font-size: 18px;
 
-        margin-bottom: 17px;
+        margin-bottom: 16px;
     }
 
-    h1 {
-        font-size: 24px;
-
-        letter-spacing: -0.5px;
+    h1,
+    .game-section h1 {
+        font-size: 23px;
     }
 
     .subtitle {
@@ -1067,26 +1151,36 @@ h1 span {
     }
 
     .game-info {
-        grid-template-columns: 1fr 1fr;
+        gap: 5px;
     }
 
     .info-item {
-        padding: 9px 6px;
+        padding: 8px 5px;
+
+        gap: 5px;
     }
 
     .info-icon {
         width: 27px;
         height: 27px;
 
-        font-size: 13px;
+        font-size: 12px;
+    }
+
+    .info-item strong {
+        font-size: 9px;
+    }
+
+    .info-item small {
+        font-size: 7px;
     }
 
     .stats {
-        grid-template-columns: 1fr 1fr;
+        gap: 5px;
     }
 
     .stat-card {
-        padding: 8px 6px;
+        padding: 8px 5px;
     }
 }
 
@@ -1098,13 +1192,13 @@ h1 span {
     .page-wrapper {
         align-items: flex-start;
 
-        padding-top: 10px;
-        padding-bottom: 10px;
+        padding-top: 8px;
+        padding-bottom: 8px;
     }
 
     .game-card {
-        padding-top: 20px;
-        padding-bottom: 15px;
+        padding-top: 18px;
+        padding-bottom: 13px;
     }
 
     .game-logo {
@@ -1112,10 +1206,10 @@ h1 span {
     }
 
     .brand-name {
-        margin-bottom: 13px;
+        margin-bottom: 12px;
     }
 
     .game-footer {
-        margin-top: 14px;
+        margin-top: 12px;
     }
 }
